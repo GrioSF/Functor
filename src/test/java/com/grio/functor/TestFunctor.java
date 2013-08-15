@@ -17,6 +17,28 @@ public class TestFunctor {
 	public void setup() {
 		stringList = Arrays.asList("one", "two", "three", "four", "five", "six");
 	}
+
+	
+	@Test
+	public void testFilter() {
+		Visitor.visit(stringList, new ListAllFunctor<String>() {
+
+			@Override
+			public Void execute(String item, ListIterator<String> itr) {
+				System.out.println(item);
+				visited[0]++;
+				return null;
+			}
+		}, new Filter<String>() {
+
+			@Override
+			public boolean accept(String item) {
+				return item.startsWith("t");
+			}
+		});
+		Assert.assertEquals((Integer)2, visited[0]);
+	}
+	
 	
 	@Test
 	public void testListAllFunctor() {

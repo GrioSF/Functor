@@ -55,6 +55,20 @@ public class Visitor<T, R> {
 			functor.execute(item);
 		}
 	}
+
+	/**
+	 * 
+	 * @param list
+	 * @param functor
+	 */
+	public static <T> void visit(List<T> list, ListAllFunctor<T> functor, Filter<T> filter) {
+		for(ListIterator<T> itr = list.listIterator(); itr.hasNext();) {
+			T item = itr.next();
+			if (filter.accept(item)) {
+				functor.execute(item, itr);
+			}
+		}
+	}
 	
 	private Visitor() {}
 
